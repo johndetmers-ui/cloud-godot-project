@@ -1,0 +1,15 @@
+# Godot 4+ generated folders
+.godot/
+
+# Export templates and build outputs
+build/
+dist/
+exports/
+
+# Mono/C# (if enabled later)
+.mono/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/

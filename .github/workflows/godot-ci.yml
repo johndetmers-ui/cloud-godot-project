@@ -1,0 +1,36 @@
+name: godot-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate-and-export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: firebelley/setup-godot@v1
+        with:
+          version: 4.2.2
+          use-dotnet: false
+
+      - name: Headless import smoke check
+        run: |
+          godot4 --headless --path . --import
+
+      - name: Export Linux smoke build
+        run: |
+          mkdir -p build/linux
+          godot4 --headless --path . --export-release "Linux/X11" build/linux/CloudGodotProject.x86_64
+          chmod +x build/linux/CloudGodotProject.x86_64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-smoke-build
+          path: build/linux/CloudGodotProject.x86_64
