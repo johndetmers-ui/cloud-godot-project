@@ -14,19 +14,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Godot
-        uses: firebelley/setup-godot@v1
+        uses: lihop/setup-godot@v3
         with:
-          version: 4.2.2
-          use-dotnet: false
+          version: 4.2.2-stable
+          export-templates: true
 
       - name: Headless import smoke check
         run: |
-          godot4 --headless --path . --import
+          godot --headless --path . --import
 
       - name: Export Linux smoke build
         run: |
           mkdir -p build/linux
-          godot4 --headless --path . --export-release "Linux/X11" build/linux/CloudGodotProject.x86_64
+          godot --headless --path . --export-release "Linux/X11" build/linux/CloudGodotProject.x86_64
           chmod +x build/linux/CloudGodotProject.x86_64
 
       - name: Upload artifact
